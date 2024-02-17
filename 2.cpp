@@ -1,40 +1,25 @@
-#include "string"
-#include "iostream"
-
+#include <regex>
+#include <string> // Use angle brackets for standard library includes
+#include <iostream>
+#include <numeric>
 
 using namespace std;
 
 class Solution {
 public:
     string gcdOfStrings(string str1, string str2) {
-        string res = "";
-        int size;
-        if (str1.size() > str2.size()) {
-            size = str1.size();
-        } else {
-            size = str2.size();
-        }
-
-        for (int a = 0; a < size; a++) {
-            if(str1[a] == res[0] && str1[a+1] == res[1]){
-                break;
-            }
-            if(str1[a] == str2[a] ){
-                res.push_back(str1[a]);
-            }
-
-        }
-
-        cout << res;
-        return res;
+        return (str1 + str2 == str2 + str1)?
+               str1.substr(0, gcd(size(str1),size(str2))): "";
     }
 };
 
 
-int main(){
-    string a = "ABCDEABCDEABCDEABCDE";
-    string b = "ABCDEABCDE";
+int main() {
+    string a = "AAAAAAAAA";
+    string b = "AAACCC";
 
     Solution solution;
-    solution.gcdOfStrings(a,b);
+    string res = solution.gcdOfStrings(a, b);
+
+    cout << res;
 }
