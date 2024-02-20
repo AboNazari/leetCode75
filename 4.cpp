@@ -24,6 +24,7 @@ public:
     }
 };
 
+
 int main() {
     vector<int> flowerbed = {0};
     int n = 1;
