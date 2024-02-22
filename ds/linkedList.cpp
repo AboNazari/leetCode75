@@ -46,14 +46,37 @@ void insert(Node **head, int newData, int n) {
 
 }
 
-void print(Node *head) {
-    Node *temp = head;
-    while (temp != nullptr) {
-        cout << temp->data;
-        cout << "  ";
-        temp = temp->next;
+void reverse(Node **head) {
+    Node *prev, *current, *next;
+    current = *head;
+    prev = nullptr;
+
+    while (current != nullptr) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
     }
+
+    *head = prev;
 }
+
+void recursiveRevers(Node **head) {
+    Node *current, *prev;
+    current = *head;
+
+    if (current == nullptr) {
+        *head = prev;
+        return;
+    }
+    
+    current = current->next;
+    recursiveRevers(&current);
+    prev = current;
+    cout << current -> data <<endl;
+    current -> next = prev;
+}
+
 
 void deleteNode(Node **head, int position) {
     Node *temp = *head;
@@ -73,6 +96,17 @@ void deleteNode(Node **head, int position) {
     delete temp;
 }
 
+
+void print(Node *head) {
+    Node *temp = head;
+    while (temp != nullptr) {
+        cout << temp->data;
+        cout << "  ";
+        temp = temp->next;
+    }
+}
+
+
 int main() {
     Node *head;
     head = nullptr;
@@ -82,11 +116,9 @@ int main() {
     add(&head, 6);
     insert(&head, 8, 2); // 2 8 5 6
     insert(&head, 10, 1); // 10 2 8 5 6
-    cout << "List of Elements in list: " << endl;
-    print(head);
 
     deleteNode(&head, 1);
-    cout << "List of Elements in list: " << endl;
-    print(head); // 10 2 8 5 6
 
+    recursiveRevers(&head);
+    print(head);
 }
