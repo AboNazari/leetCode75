@@ -26,6 +26,7 @@ void add(Node **head, int newData) {
 
 }
 
+
 void insert(Node **head, int newData, int n) {
     Node *newNode = new Node();
     newNode->data = newData;
@@ -61,20 +62,38 @@ void reverse(Node **head) {
     *head = prev;
 }
 
-void recursiveRevers(Node **head) {
-    Node *current, *prev;
-    current = *head;
-
+void reverseUtil(Node *current, Node *prev, Node **head) {
     if (current == nullptr) {
         *head = prev;
         return;
     }
-    
-    current = current->next;
-    recursiveRevers(&current);
+
+    Node *next = current->next;
+    current->next = prev;
     prev = current;
-    cout << current -> data <<endl;
-    current -> next = prev;
+    reverseUtil(next, prev, head);
+}
+
+
+void recursiveRevers(Node **head, Node *current) {
+
+    //    to use a helper function for recursion
+    //    reverseUtil(*head, nullptr, head);
+
+    //check if after next link of this node is null
+    if (current->next == nullptr) {
+        *head = current;
+        return;
+    }
+
+    // Pass head everytime, change current to next link
+    recursiveRevers(head, current->next);
+
+    // when last recursive call is done, the state returns to one before last node in the chain
+    Node *next = current->next;
+    next->next = current;
+    current->next = nullptr;
+
 }
 
 
@@ -119,6 +138,6 @@ int main() {
 
     deleteNode(&head, 1);
 
-    recursiveRevers(&head);
+    recursiveRevers(&head, head);
     print(head);
 }
